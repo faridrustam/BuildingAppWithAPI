@@ -67,7 +67,7 @@ class PostCell: UITableViewCell {
             ])
     }
     
-    func callElement(titleLabel: String, bodyLabel: String) {
+    func callElement(titleLabel: String, bodyLabel: String = "") {
         title.text = titleLabel
         body.text = bodyLabel
     }

@@ -36,6 +36,7 @@ class PostVC: BaseVC {
     override func configureUI() {
         view.addSubview(table)
         table.frame = view.bounds
+        title = "Posts"
     }
     
     override func configureConstraint() {

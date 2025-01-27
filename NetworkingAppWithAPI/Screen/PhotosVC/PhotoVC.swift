@@ -1,5 +1,5 @@
 //
-//  AlbumsVC.swift
+//  PhotoVC.swift
 //  NetworkingAppWithAPI
 //
 //  Created by Farid Rustamov on 27.01.25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlbumsVC: BaseVC {
+class PhotoVC: BaseVC {
     
     //MARK: UI Elements
     
@@ -15,26 +15,27 @@ class AlbumsVC: BaseVC {
         let t = UITableView()
         t.dataSource = self
         t.delegate = self
-        t.allowsSelection = false
         t.translatesAutoresizingMaskIntoConstraints = false
-        t.register(PostCell.self, forCellReuseIdentifier: "\(PostCell.self)")
+        t.register(PhotoCell.self, forCellReuseIdentifier: "\(PhotoCell.self)")
+        
         return t
     }()
     
-    let viewModel = AlbumsVM()
+    let viewModel = PhotoVM()
     
     //MARK: - Life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getAlbumData {
+
+        viewModel.getPhotoData {
             self.table.reloadData()
         }
     }
     
     override func configureUI() {
         view.addSubview(table)
-        title = "Albums"
+        title = "Photos"
     }
     
     override func configureConstraint() {
@@ -47,16 +48,27 @@ class AlbumsVC: BaseVC {
     }
 }
 
-extension AlbumsVC: UITableViewDataSource, UITableViewDelegate {
+extension PhotoVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.albums.count
+        viewModel.photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "\(PostCell.self)") as! PostCell
-        cell.callElement(titleLabel: viewModel.albums[indexPath.row].title ?? "")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "\(PhotoCell.self)") as! PhotoCell
+        cell.callElement(photoUrl: viewModel.photos[indexPath.row].downloadURL ?? "", title: viewModel.photos[indexPath.row].author ?? "")
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = PhotoDetailVC()
+        controller.imageURL = viewModel.photos[indexPath.row].downloadURL ?? ""
+        
+        navigationController?.present(controller, animated: true)
     }
 }

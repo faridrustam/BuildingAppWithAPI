@@ -8,13 +8,12 @@
 import Foundation
 
 struct PhotoModel: Codable {
-    let albumID, id: Int?
-    let title: String?
-    let url, thumbnailURL: String?
+    let id, author: String?
+    let width, height: Int?
+    let url, downloadURL: String?
 
     enum CodingKeys: String, CodingKey {
-        case albumID = "albumId"
-        case id, title, url
-        case thumbnailURL = "thumbnailUrl"
+        case id, author, width, height, url
+        case downloadURL = "download_url"
     }
 }

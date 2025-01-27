@@ -37,6 +37,7 @@ class CommentVC: BaseVC {
     
     override func configureUI() {
         view.addSubview(table)
+        title = "Comments"
     }
     
     override func configureConstraint() {
